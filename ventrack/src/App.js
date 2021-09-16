@@ -1,5 +1,8 @@
+
 import logo from './logo.svg';
 import './App.css';
+import FormDialog from './login';
+
 
 function App() {
   return (
@@ -12,7 +15,7 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href= {FormDialog}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -22,5 +25,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

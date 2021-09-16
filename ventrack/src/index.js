@@ -2,11 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import FormDialog from './login';
 import reportWebVitals from './reportWebVitals';
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <FormDialog />
   </React.StrictMode>,
   document.getElementById('root')
 );
