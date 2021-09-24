@@ -1,10 +1,23 @@
 
-function Login() {
-    return (
+const Login = ()=> {
+  return (  
+    
+    <>
+      <div className='card'>
      
-      <div>
-          <p>Este es el login!</p>
+        <form action="" className='borderAcceso'>
+              <label htmlFor="">Usuario: </label>
+              <input type="text" />
+              <br />
+              <label htmlFor="">Contraseña: </label>
+              <input type="password" />
+              <br />
+              <input type="submit" value="Ingresar"></input>
+            </form> 
+      
+       
       </div>
+    </>
     );
   }
 

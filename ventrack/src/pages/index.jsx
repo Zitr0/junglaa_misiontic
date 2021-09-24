@@ -8,9 +8,7 @@ function Index(){
                     <img src={logo} className="App-logo" alt="logo" />
                                       
                     <Link to ='/Login'>
-                        <button type="button">
-                                    Login
-                        </button>
+                        <input type="submit" value="Acceso"></input>
                     </Link>
              
                 </header>
