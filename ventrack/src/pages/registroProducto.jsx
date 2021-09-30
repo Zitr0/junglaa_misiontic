@@ -20,15 +20,15 @@ const registroProducto = () => {
             {/* gap-6 flex flex-col' */}
 
               <label htmlFor="identificador">Identificador unico: </label>
-              <input id="identificador" type="number" className=' bg-gray-50 border border-gray-  300 p-1 m-2' 
+              <input id="identificador" type="number" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
               placeholder="Ingrese el identificador" required/>
 
               <label htmlFor="descripcion">Descripción: </label>
                 {/* <input type="text" className='flex bg-gray-50 border border-gray-600 p-1 rounded-lg m-2' /> */}
-                <textarea id="descripcion" className=" bg-gray-50 border border-gray-300 p-1 m-2" cols="22" rows="3" placeholder="Descripción del producto" required></textarea>
+                <textarea id="descripcion" className=" bg-gray-50 border rounded border-gray-300 p-1 m-2" cols="22" rows="3" placeholder="Descripción del producto" required></textarea>
 
               <label htmlFor="valor">Valor unitario: </label>
-                <input id="valor" type="number" className=' bg-gray-50 border border-gray-300 p-1 m-2' 
+                <input id="valor" type="number" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
                 placeholder="Valor del producto" required/>
 
               <label htmlFor="estado">Estado: </label>
@@ -41,7 +41,7 @@ const registroProducto = () => {
               <input id="estado" name="Estado" type="radio" value="2" required/>No Disponible */}
 
               <button onClick={handleClickEvent} type="submit" className='col-span-2 bg-indigo-500 
-              text-white border p-3 m-5 w-1/5 hover:bg-blue-400'>Enviar</button>
+              text-white rounded border p-3 m-5 w-1/5 hover:bg-blue-400'>Enviar</button>
             </form>
         </div>
     )
