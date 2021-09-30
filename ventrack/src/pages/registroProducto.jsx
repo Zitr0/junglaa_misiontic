@@ -16,7 +16,7 @@ const registroProducto = () => {
 
     return (
         <div>
-            <form className='text-lg flex flex-col items-center'>
+            <form className='text-lg flex flex-col items-center my-28'>
             {/* gap-6 flex flex-col' */}
 
               <label htmlFor="identificador">Identificador unico: </label>
@@ -41,7 +41,7 @@ const registroProducto = () => {
               <input id="estado" name="Estado" type="radio" value="2" required/>No Disponible */}
 
               <button onClick={handleClickEvent} type="submit" className='col-span-2 bg-indigo-500 
-              text-white border p-3 m-5 w-1/5'>Enviar</button>
+              text-white border p-3 m-5 w-1/5 hover:bg-blue-400'>Enviar</button>
             </form>
         </div>
     )
