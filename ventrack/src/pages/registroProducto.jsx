@@ -21,7 +21,7 @@ const registroProducto = () => {
               text-white rounded border p-2 w-24 hover:bg-blue-400">Volver</button>
             </Link>
 
-            <form className='text-lg flex flex-col items-center my-28 overflow-auto'>
+            <form className='text-lg flex flex-col items-center my-28'>
             {/* gap-6 flex flex-col' */}
 
               <label htmlFor="identificador">Identificador unico: </label>

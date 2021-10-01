@@ -2,10 +2,8 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div>
-            <footer>
+        <div className="bg-yellow-300">
                 Este es el footer de la pagina
-            </footer>
         </div>
     )
 }
