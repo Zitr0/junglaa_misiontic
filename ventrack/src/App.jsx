@@ -1,6 +1,7 @@
 import {
   BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import RegistroProducto from './pages/registroProducto';
+import RegistroProducto from 'pages/registroProducto';
+import ListaProducto from "pages/listaProductos";
 import 'styles/styles.css';
 
 function App() {
@@ -11,6 +12,9 @@ function App() {
           <Switch>
             <Route path='/registroProducto'>
               <RegistroProducto />
+            </Route>
+            <Route path='/listaProductos'>
+              <ListaProducto />
             </Route>
           </Switch>
         </Router>

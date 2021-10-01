@@ -1,5 +1,5 @@
 import React, { Component, useRef } from 'react'
-
+import { Link } from 'react-router-dom';
 
 const registroProducto = () => {
 
@@ -16,7 +16,12 @@ const registroProducto = () => {
 
     return (
         <div>
-            <form className='text-lg flex flex-col items-center my-28'>
+            <Link to ='/listaProductos'>
+            <button type="button" className="absolute top-21 right-20 bg-indigo-500 
+              text-white rounded border p-2 w-24 hover:bg-blue-400">Volver</button>
+            </Link>
+
+            <form className='text-lg flex flex-col items-center my-28 overflow-auto'>
             {/* gap-6 flex flex-col' */}
 
               <label htmlFor="identificador">Identificador unico: </label>
@@ -41,7 +46,7 @@ const registroProducto = () => {
               <input id="estado" name="Estado" type="radio" value="2" required/>No Disponible */}
 
               <button onClick={handleClickEvent} type="submit" className='col-span-2 bg-indigo-500 
-              text-white rounded border p-3 m-5 w-1/5 hover:bg-blue-400'>Enviar</button>
+              text-white rounded border p-3 m-5 w-1/5 hover:bg-blue-400'>Agregar producto</button>
             </form>
         </div>
     )
