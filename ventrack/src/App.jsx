@@ -1,5 +1,6 @@
 import RegistroVentas from './pages/RegistroVentas';
 import SisVenta from './pages/SistemaVentas';
+import TablaGv from './pages/TablaGV';
 import './styles/styles.css';
 import {
   BrowserRouter as Router,
@@ -14,6 +15,9 @@ function App() {
         <Switch>
           <Route path='/RegistroVentas'>
             <RegistroVentas/>
+          </Route>
+          <Route path='/TablaGV'>
+            <TablaGv/>
           </Route>
           <Route path='/'>
             <SisVenta/>

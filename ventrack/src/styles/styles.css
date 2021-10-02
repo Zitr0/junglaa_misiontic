@@ -65,7 +65,7 @@ ul{
 }
 
 ::-webkit-input-placeholder{
-  color: blanchedalmond;
+  color: black;
 }
 
 .formulario p {
@@ -97,4 +97,37 @@ ul{
 .botons:hover{
   cursor: pointer;
   transform: scale(1.01);
+}
+
+.cont{
+  margin: 150px auto;
+  width: 1000px;
+}
+
+.tab{
+  width: 100%;
+  text-align: left;
+}
+th,td{
+  border: solid 1px;
+  padding: 20px;
+}
+.buscar{
+  position: absolute;
+  padding: 5px;
+  
+}
+.buscar input{
+  width: 240px;
+  height: 40px;
+  padding: 0 20px;
+  font-size: 18px;
+  border: solid 1px;
+  color: #000;
+  
+}
+.botos{
+  padding-top: 10px;
+  width: 240px;
+  font-size: 18px;
 }

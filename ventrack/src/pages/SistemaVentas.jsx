@@ -6,7 +6,7 @@ function SisVenta(){
        <header>
         <ul className="nv">
             <li className="tl">
-                Inicio
+                Sistema de Venta
             </li>
             <li className="us">
                 Usuario
@@ -15,13 +15,14 @@ function SisVenta(){
     </header>
     
         <section className="">
-        <h1 className='ti'>Sistema de Venta</h1>
         <br/>
         <Link to='/RegistroVentas'>
         <h2>Registrar Venta</h2>
         </Link>
         <br/>
-        <h2>Consultar Estado de Venta</h2>
+        <Link to='/TablaGV'>
+        <h2>Consultar Tabla de Venta</h2>
+        </Link>
         </section>
     
     </div>
