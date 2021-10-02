@@ -1,16 +1,10 @@
-import React, { Component, useRef } from 'react'
+import {Link} from 'react-router-dom';
 
 const Login = ()=> {
 
-  const handleClickEvent = () => {
-     const name = document.getElementById("name").value;
-     const pass = document.getElementById("pass").value;
-     alert("Usuario:" + name + " " + "Contraseña:" + pass)
-  }
-  return (  
+return (  
     <>
       <div className='card'>
-     
         <form action="" className='borderAcceso'>
               <label>Usuario: </label>
               <input type="text" id="name"/>
@@ -18,7 +12,10 @@ const Login = ()=> {
               <label>Contraseña: </label>
               <input type="password" id="pass"/>
               <br />
-              <input type="submit" value="Ingresar" onClick={handleClickEvent}></input>
+              <Link to ='/listaProductos'>
+              <button type="button" className="bg-indigo-500 
+              text-white rounded border  p-2 hover:bg-blue-400">Ingresar</button>
+              </Link>
             </form> 
       </div>
     </>

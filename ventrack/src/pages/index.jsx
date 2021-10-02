@@ -8,9 +8,9 @@ function Index(){
                     <img src={logo} className="App-logo" alt="logo" />
                                       
                     <Link to ='/Login'>
-                        <input type="submit" value="Acceso"></input>
+                        <button type="button" className="absolute bg-indigo-500 
+              text-white rounded border p-2 hover:bg-blue-400" value="Acceso">Acceso</button>
                     </Link>
-             
                 </header>
             </div>
 }
