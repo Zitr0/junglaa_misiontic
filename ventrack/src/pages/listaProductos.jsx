@@ -75,6 +75,10 @@ const listaProductos = () => {
                 </tr>
                 </tbody>
             </table>
+            <button className="bg-indigo-500 my-5
+              text-white rounded border p-2 w-1/6 hover:bg-blue-400">Buscar producto</button>
+            <button className="bg-indigo-500 
+              text-white rounded border p-2 w-1/6 hover:bg-blue-400">Actualizar producto</button>
         </div>
     )
 }
