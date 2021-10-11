@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.tabla th{
+    @apply border border-gray-400 text-gray-800 bg-gray-300;
+}
+
+.tabla td{
+    @apply border border-gray-400;
+}
+
+.tabla tr:nth-child(even){
+    background-color:#e7e3e3;
+}
+
+.tabla tr:hover{
+    background-color: #CDCDCD;
+    cursor: pointer;
+}
