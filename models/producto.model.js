@@ -6,7 +6,7 @@ const ProductoSchema = Schema({
     identificador: String,
     descripcion: String,
     valor: Number,
-    estado: Boolean
+    estado: String
 });
  
 module.exports = mongoose.model('Producto', ProductoSchema);
