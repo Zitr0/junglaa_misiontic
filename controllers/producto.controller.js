@@ -1,6 +1,14 @@
 'use strict'
 const Producto = require('../models/Producto.model.js')
- 
+
+/*
+identificador
+descripcion
+valor
+estado
+*/
+
+
 function getProductos(req, res){
     Producto.find({}, (error, productos)=>{
         //En caso de que haya habido un error
@@ -23,14 +31,14 @@ function registrarProducto(req, res){
     console.log(req.body);
  
     //Primero buscamos el producto en la abse de datos
-    Producto.findOne({codigo: req.body.codigo}, (err, productoEnBaseDeDatos)=>{
+    Producto.findOne({identificador: req.body.identificador}, (err, productoEnBaseDeDatos)=>{
         if(!productoEnBaseDeDatos){
             //Si no se encuentra el producto, se guarda
             let productoTemp = {
-                codigo : req.body.codigo,
-                nombre: req.body.nombre,
-                precio: req.body.precio,
-                disponible: req.body.disponible
+                identificador : req.body.identificador,
+                descripcion: req.body.descripcion,
+                valor: req.body.valor,
+                estado: req.body.estado
             }
        
             let productoARegistrar = new Producto(productoTemp);
@@ -52,7 +60,7 @@ function registrarProducto(req, res){
         }else{
             //Si se encuenra el producto sacamos un error
             res.status(400).send({
-                message: `El producto con codigo ${req.body.codigo} ya se encuentra registrado`
+                message: `El producto con identificador ${req.body.identificador} ya se encuentra registrado`
             })
         }
     });
