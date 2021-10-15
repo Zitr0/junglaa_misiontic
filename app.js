@@ -4,6 +4,7 @@ const express = require ('express');
  
 const apiProductos = require('./routes/producto.routes');
 const apiVentas = require('./routes/venta.routes');
+const apiUsuarios = require('./routes/usuario.routes');
 
 const app = express();
  
@@ -18,5 +19,6 @@ app.use(function(req, res, next) {
  
 app.use('/api', apiProductos);
 app.use('/api', apiVentas);
+app.use('/api', apiUsuarios);
  
 module.exports=app
