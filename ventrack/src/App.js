@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from 'react';
+//Routing Pages
+import Dashboard from './Dashboard.js';
+import Login from './Login.js';
+import Register from './Register.js';
+import Roles from './Roles.js';
+//Router Modules Router for routing, Switch for switching components related to routes, Link for routes linking
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+class App extends React.Component {
+  
+render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      
+        <Switch>
+          <Route exact path='/' component={Dashboard} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/register' component={Register} />
+          <Route exact path='/roles' component={Roles} />
+        </Switch>
+      
+  </Router>
   );
+  
 }
-
+}
 export default App;
