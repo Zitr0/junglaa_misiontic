@@ -1,8 +1,7 @@
 import {
   BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import GeneralLayout from "layouts/GeneralLayout";
-import RegistroProducto from 'pages/registroProducto';
-import ListaProducto from "pages/listaProductos";
+import Productos from 'pages/Productos';
 import 'styles/styles.css';
 
 function App() {
@@ -12,11 +11,8 @@ function App() {
         <Router>
           <GeneralLayout>
           <Switch>
-            <Route path='/registroProducto'>
-              <RegistroProducto />
-            </Route>
-            <Route path='/listaProductos'>
-              <ListaProducto />
+            <Route path='/productos'>
+              <Productos />
             </Route>
           </Switch>
           </GeneralLayout>
