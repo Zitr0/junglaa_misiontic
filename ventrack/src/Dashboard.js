@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
+
 class Dashboard extends React.Component {
     sidebarToggle() {
         var sidebar = document.getElementById('sidebar');
@@ -46,21 +47,7 @@ render() {
                             <span><i class="fas fa-angle-right float-right"></i></span>
                         </a>
                     </li>
-                    <li class="w-full h-full py-3 px-2">
-                      
-                        <ul class="list-reset -mx-2 bg-white-medium-dark">
-                            <li class="border-t mt-2 border-light-border w-full h-full px-2 py-3">
-                            <Link class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline" to={'/login'}> Login
-                                    <span><i class="fa fa-angle-right float-right"></i></span></Link>
-                                
-                            </li>
-                            <li class="border-t border-light-border w-full h-full px-2 py-3">
-                            <Link class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline" to={'/register'}>  Agregar Persona
-                                    <span><i class="fa fa-angle-right float-right"></i></span></Link>
-                                
-                            </li>
-                        </ul>
-                    </li>
+                    
                 </ul>
             </aside>
            
@@ -71,11 +58,11 @@ render() {
                         
                         <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
                             <div class="p-4 flex flex-col">
-                                <a href="#" class="no-underline text-white text-2xl">
+                                <a href="./RegistroUsuarios" class="no-underline text-white text-2xl">
                                     Registro
                                 </a>
                                 <a href="#" class="no-underline text-white text-lg">
-                                de Admin / Vendedor
+                                de Personas
                                 </a>
                             </div>
                         </div>
@@ -87,6 +74,17 @@ render() {
                                 </a>
                                 <a href="#" class="no-underline text-white text-lg">
                                     de productos
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
+                            <div class="p-4 flex flex-col">
+                                <a href="#" class="no-underline text-white text-2xl">
+                                    Registro
+                                </a>
+                                <a href="#" class="no-underline text-white text-lg">
+                                    de Ventas
                                 </a>
                             </div>
                         </div>
@@ -103,7 +101,6 @@ render() {
                                     <thead class="bg-grey-dark text-white text-normal">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Nombre de Usuario</th>
                                         <th scope="col">Rol</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Crear</th>
