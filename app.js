@@ -3,6 +3,8 @@
 const express = require ('express');
  
 const apiProductos = require('./routes/producto.routes');
+const apiVentas = require('./routes/venta.routes');
+
 const app = express();
  
 app.use(express.urlencoded({extended:false}));
@@ -15,5 +17,6 @@ app.use(function(req, res, next) {
 });
  
 app.use('/api', apiProductos);
+app.use('/api', apiVentas);
  
 module.exports=app

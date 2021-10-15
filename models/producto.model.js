@@ -13,21 +13,10 @@ module.exports = mongoose.model('Producto', ProductoSchema);
 
 
 /*
-identificador
-descripcion
-valor
+id 
+nombre
+rol
 estado
-*/
-
-/*
-Id
-Cantidad
-Total 
-ValorUnitario
-Fecha
-Cliente 
-Documento
-NombreDeEncargado 
 */
 
 /*
@@ -46,9 +35,3 @@ entregado,
 cancelado.
 */
 
-/*
-id 
-nombre
-rol
-estado
-*/

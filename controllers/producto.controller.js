@@ -1,14 +1,6 @@
 'use strict'
 const Producto = require('../models/Producto.model.js')
 
-/*
-identificador
-descripcion
-valor
-estado
-*/
-
-
 function getProductos(req, res){
     Producto.find({}, (error, productos)=>{
         //En caso de que haya habido un error
