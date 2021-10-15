@@ -1,6 +1,6 @@
 import React from 'react';
 //Routing Pages
-import Dashboard from './Dashboard.js';
+import Dashboard from './pages/Dashboard.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import Roles from './Roles.js';
