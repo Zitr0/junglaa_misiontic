@@ -1,42 +1,9 @@
-import { nanoid } from 'nanoid';
+//import { nanoid } from 'nanoid';
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-const productosBacked = [
-  {
-    identificador: "123",
-    descripcion: "Esta es una descripción",
-    valor: 10000,
-    estado: "Disponible"
-  },
-  {
-    identificador: "234",
-    descripcion: "Esta es una descripción",
-    valor: 20000,
-    estado: "No Disponible"
-  },
-  {
-    identificador: "345",
-    descripcion: "Esta es una descripción",
-    valor: 30000,
-    estado: "No Disponible"
-  },
-  {
-    identificador: "456",
-    descripcion: "Esta es una descripción",
-    valor: 40000,
-    estado: "Disponible"
-  },
-  {
-    identificador: "567",
-    descripcion: "Esta es una descripción",
-    valor: 50000,
-    estado: "Disponible"
-  }
-]
 
 const Productos = () => {
   const [mostrarLista, setMostrarLista] = useState(true);
@@ -44,8 +11,41 @@ const Productos = () => {
   const [textoBoton, setTextoBoton] = useState("Crear nuevo producto");
 
   useEffect(() => {
+
+    // const obtenerProductos = async () => {
+    //   const options = {
+    //     method: 'GET',
+    //     url: 'http://localhost:3001/api/producto',
+    //     headers: {'Content-Type': 'application/json'}
+    //   };
+      
+    //   await axios
+    //     .request(options)
+    //     .then(function (response) {
+    //       setProductos(response.data);
+    //     })
+    //     .catch(function (error) {
+    //       console.error(error);
+    //     });
+    // }
+
     //Obtener lista de productos desde el backend
-    setProductos(productosBacked);
+      const options = {
+        method: 'GET',
+        url: 'http://localhost:3001/api/producto',
+        headers: {'Content-Type': 'application/json'}
+      };
+      
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log(response.data);
+          //Este es el que no funciona
+          //setProductos(response.data);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
   }, []);
 
   useEffect(() => {
@@ -59,7 +59,6 @@ const Productos = () => {
 
   return (
     <div>
-      {/* <h2>Pagina de administración de productos</h2> */}
       <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute top-20 right-20 bg-indigo-500 
       text-white rounded border p-3 hover:bg-blue-400">{textoBoton}</button>
       {mostrarLista ? (
@@ -83,45 +82,46 @@ const ListaProductos = ({tablaProductos}) => {
 
   return(
     <div className="flex flex-col items-center justify-center table-fixed">
-        <h2 className="text-4xl font-serif my-10">Todos los productos</h2>
-          <table className="tabla border-separate">
-              <thead>
+      <h2 className="text-4xl font-serif my-10">Todos los productos</h2>
+        <table className="tabla border-separate">
+          <thead>
+            <tr>
+              <th className="tabla th">Identificador único</th>
+              <th className="tabla th">Descripción</th>
+              <th className="tabla th">Valor unitario</th>
+              <th className="tabla th">Estado</th>
+              <th className="tabla th">Actualizar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tablaProductos.map((producto) => {
+              return(
+                //key={nanoid()}
                 <tr>
-                    <th className="tabla th">Identificador único</th>
-                    <th className="tabla th">Descripción</th>
-                    <th className="tabla th">Valor unitario</th>
-                    <th className="tabla th">Estado</th>
-                    <th className="tabla th">Actualizar</th>
-                </tr>
-                </thead>
-                <tbody>
-                  {tablaProductos.map((producto) => {
-                    return(
-                      <tr key={nanoid()}>
-                        <td>{producto.identificador}</td>
-                        <td>{producto.descripcion}</td>
-                        <td>{producto.valor}</td>
-                        <td>{producto.estado}</td>
-                        <td>
-                          <div className="flex w-full justify-around">
-                          <i className="fas fa-pencil-alt text-blue-700 hover:text-blue-900" />
-                          </div>
-                        </td>
-                      </tr> 
-                    );
-                  })}
-                </tbody>
-          </table>
+                  <td>{producto.descripcion}</td>
+                  <td>{producto.estado}</td>
+                  <td>{producto.identificador}</td>
+                  <td>{producto.valor}</td>
+                  {/* <td>
+                    <div className="flex w-full justify-around">
+                      <i className="fas fa-pencil-alt text-blue-700 hover:text-blue-900" />
+                    </div>
+                  </td> */}
+                </tr> 
+              );
+            })}
+          </tbody>
+        </table>
           <button className="bg-indigo-500 my-5
              text-white rounded border p-2 w-1/6 hover:bg-blue-400">Buscar producto</button>
-        </div>
+    </div>
   );
 };
 
 
 
 const RegistroProductos = ({setMostrarLista, tablaProductos, setProductos}) => {
-  //{setMostrarLista, tablaProductos, setProductos}
+
   const form = useRef(null);
 
   const submitForm = async (e) => {
@@ -162,13 +162,12 @@ const RegistroProductos = ({setMostrarLista, tablaProductos, setProductos}) => {
 
   return (
         <div>
-          {/* ref={form} */}
             <form ref={form} onSubmit={submitForm} className='text-lg flex flex-col items-center'>
             <h2 className="text-3xl font-serif">Crear nuevo producto</h2>
-            {/* gap-6 flex flex-col' */}
 
               <label className="my-4 font-serif" htmlFor="identificador">Identificador unico: </label>
               <input name="identificador" type="number" 
+
               className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
               placeholder="Ingrese el identificador" required />
 
