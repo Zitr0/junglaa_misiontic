@@ -4,6 +4,7 @@ import Dashboard from './Dashboard.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import RegistroUsuarios from './RegistroUsuarios.js';
+import Productos from './Productos.jsx';
 //Router Modules Router for routing, Switch for switching components related to routes, Link for routes linking
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ render() {
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           <Route exact path='/RegistroUsuarios' component={RegistroUsuarios} />
+          <Route exact path='/Productos' component={Productos} />
         </Switch>
       
   </Router>

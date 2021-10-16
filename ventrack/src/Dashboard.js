@@ -58,7 +58,7 @@ render() {
                         
                         <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
                             <div class="p-4 flex flex-col">
-                                <a href="./RegistroUsuarios" class="no-underline text-white text-2xl">
+                                <a href="/RegistroUsuarios" class="no-underline text-white text-2xl">
                                     Registro
                                 </a>
                                 <a href="#" class="no-underline text-white text-lg">
@@ -69,7 +69,7 @@ render() {
                        
                         <div class="shadow bg-success border-l-8 hover:bg-success-dark border-success-dark mb-2 p-2 md:w-1/4 mx-2">
                             <div class="p-4 flex flex-col">
-                                <a href="#" class="no-underline text-white text-2xl">
+                                <a href="/Productos" class="no-underline text-white text-2xl">
                                    Registro
                                 </a>
                                 <a href="#" class="no-underline text-white text-lg">
