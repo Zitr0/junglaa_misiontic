@@ -62,9 +62,36 @@ function registrarVenta(req, res){
     });
  
 }
- 
+
+async function actualizarVenta(req, res) {
+    console.log('PATCH /api/venta');
+    console.log(req.body);
+
+    const update = await Venta.findOneAndUpdate(
+        { Id: req.body.Id }, 
+        {
+            Id: req.body.Id,
+            Cantidad: req.body.Cantidad,
+            Total:  req.body.Total,
+            ValorUnitario:  req.body.ValorUnitario,
+            Fecha:  req.body.Fecha,
+            Cliente:  req.body.Cliente,
+            Documento:  req.body.Documento,
+            NombreDeEncargado:  req.body.NombreDeEncargado
+        },
+        {
+            new: true,
+            upsert:true
+        })
+    console.log(update);
+    res.status(200).send({
+        message: 'Venta actualizada'
+    })
+
+}
  
 module.exports = {
     getVentas,
-    registrarVenta
+    registrarVenta,
+    actualizarVenta
 }

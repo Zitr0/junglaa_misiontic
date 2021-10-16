@@ -60,10 +60,37 @@ function registrarUsuario(req, res) {
 
 }
 
-// Update
-function actualizarUsuario(req, res) {
+
+async function actualizarUsuario(req, res) {
     console.log('PATCH /api/usuario');
     console.log(req.body);
+
+    const update = await Usuario.findOneAndUpdate(
+        { id: req.body.id }, 
+        {
+            id: req.body.id,
+            nombre: req.body.nombre,
+            rol: req.body.rol,
+            estado: req.body.estado
+        },
+        {
+            new: true,
+            upsert:true
+        })
+    console.log(update);
+    res.status(200).send({
+        message: 'Usuario actualizado'
+    })
+
+}
+
+module.exports = {
+    getUsuarios,
+    registrarUsuario,
+    actualizarUsuario
+}
+
+/*
 
     //Primero buscamos el usuario en la base de datos
     Usuario.findOneAndReplace({ id: req.body.id }, (err, usuarioEnBaseDeDatos) => {
@@ -75,7 +102,7 @@ function actualizarUsuario(req, res) {
                 rol: req.body.rol,
                 estado: req.body.estado
             }
-        
+
             let usuarioAActualizar = Usuario(usuarioTemp);
 
             usuarioAActualizar.save((error, usuarioActualizado) => {
@@ -99,10 +126,5 @@ function actualizarUsuario(req, res) {
             })
         }
     });
-}
 
-module.exports = {
-    getUsuarios,
-    registrarUsuario,
-    actualizarUsuario
-}
+*/

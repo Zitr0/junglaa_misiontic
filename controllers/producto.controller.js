@@ -58,9 +58,32 @@ function registrarProducto(req, res){
     });
  
 }
- 
+
+async function actualizarProducto(req, res) {
+    console.log('PATCH /api/producto');
+    console.log(req.body);
+
+    const update = await Producto.findOneAndUpdate(
+        { identificador: req.body.identificador }, 
+        {
+            identificador: req.body.identificador,
+            descripcion: req.body.descripcion,
+            valor: req.body.valor,
+            estado: req.body.estado
+        },
+        {
+            new: true,
+            upsert:true
+        })
+    console.log(update);
+    res.status(200).send({
+        message: 'Producto actualizado'
+    })
+
+}
  
 module.exports = {
     getProductos,
-    registrarProducto
+    registrarProducto,
+    actualizarProducto
 }
