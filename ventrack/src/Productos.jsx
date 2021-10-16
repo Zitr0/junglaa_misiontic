@@ -1,6 +1,7 @@
 //import { nanoid } from 'nanoid';
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react'
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,42 +12,28 @@ const Productos = () => {
   const [textoBoton, setTextoBoton] = useState("Crear nuevo producto");
 
   useEffect(() => {
-
-    // const obtenerProductos = async () => {
-    //   const options = {
-    //     method: 'GET',
-    //     url: 'http://localhost:3001/api/producto',
-    //     headers: {'Content-Type': 'application/json'}
-    //   };
-      
-    //   await axios
-    //     .request(options)
-    //     .then(function (response) {
-    //       setProductos(response.data);
-    //     })
-    //     .catch(function (error) {
-    //       console.error(error);
-    //     });
-    // }
-
-    //Obtener lista de productos desde el backend
+    const obtenerProductos = async () => {
       const options = {
         method: 'GET',
         url: 'http://localhost:3001/api/producto',
         headers: {'Content-Type': 'application/json'}
       };
-      
-      axios
+     
+      await axios
         .request(options)
         .then(function (response) {
           console.log(response.data);
-          //Este es el que no funciona
-          //setProductos(response.data);
+          setProductos(response.data.productos);
         })
         .catch(function (error) {
           console.error(error);
         });
-  }, []);
+    };
+    //Obtener lista de productos desde el backend
+    if(mostrarLista){
+      obtenerProductos();
+    }
+  }, [mostrarLista]);
 
   useEffect(() => {
     if(mostrarLista){
@@ -98,22 +85,24 @@ const ListaProductos = ({tablaProductos}) => {
               return(
                 //key={nanoid()}
                 <tr>
-                  <td>{producto.descripcion}</td>
-                  <td>{producto.estado}</td>
                   <td>{producto.identificador}</td>
+                  <td>{producto.descripcion}</td>
                   <td>{producto.valor}</td>
-                  {/* <td>
+                  <td>{producto.estado}</td>
+                  <td>
                     <div className="flex w-full justify-around">
                       <i className="fas fa-pencil-alt text-blue-700 hover:text-blue-900" />
                     </div>
-                  </td> */}
+                  </td>
                 </tr> 
               );
             })}
           </tbody>
         </table>
+        <Link to="/">
           <button className="bg-indigo-500 my-5
-             text-white rounded border p-2 w-1/6 hover:bg-blue-400">Buscar producto</button>
+             text-white rounded border p-4  hover:bg-blue-400">Página principal</button>
+        </Link>
     </div>
   );
 };
@@ -160,8 +149,26 @@ const RegistroProductos = ({setMostrarLista, tablaProductos, setProductos}) => {
     setMostrarLista(true);
   };
 
+  // sidebarToggle(){
+  //   var sidebar = document.getElementById('sidebar');
+   
+  //   if (sidebar.style.display === "none") {
+  //       sidebar.style.display = "block";
+  //   } else {
+  //       sidebar.style.display = "none";
+  //   }
+  // }
+
   return (
         <div>
+            {/* <header class="bg-nav">
+              <div class="flex justify-between">
+                <div class="p-1 mx-3 inline-flex items-center">
+                  <i class="fas fa-bars pr-2 text-white" onClick={this.sidebarToggle}></i>
+                  <h1 class="text-white p-2">Ventrack</h1>
+                </div>
+              </div>
+            </header> */}
             <form ref={form} onSubmit={submitForm} className='text-lg flex flex-col items-center'>
             <h2 className="text-3xl font-serif">Crear nuevo producto</h2>
 

@@ -72,7 +72,7 @@ render() {
                                 <a href="/Productos" class="no-underline text-white text-2xl">
                                    Registro
                                 </a>
-                                <a href="#" class="no-underline text-white text-lg">
+                                <a href="/Productos" class="no-underline text-white text-lg">
                                     de productos
                                 </a>
                             </div>
