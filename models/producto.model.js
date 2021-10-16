@@ -13,13 +13,6 @@ module.exports = mongoose.model('Producto', ProductoSchema);
 
 
 /*
-id 
-nombre
-rol
-estado
-*/
-
-/*
 En búsqueda:
 
 id producto
@@ -33,5 +26,6 @@ estado
 en proceso, 
 entregado, 
 cancelado.
+
 */
 
