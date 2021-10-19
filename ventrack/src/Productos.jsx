@@ -138,9 +138,10 @@ const FilaProductos = ({producto}) => {
           {editar? (
             <>
               <td>
-                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                {/* <span className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
                  type="text" value={infoNuevoProducto.identificador}
-                 onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, identificador: e.target.value})} />
+                 onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, identificador: e.target.value})} /> */}
+                 <span>{infoNuevoProducto.identificador}</span>
               </td>
               <td>
                 <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
