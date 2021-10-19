@@ -12,20 +12,4 @@ const ProductoSchema = Schema({
 module.exports = mongoose.model('Producto', ProductoSchema);
 
 
-/*
-En búsqueda:
-
-id producto
-nombre cliente
-documento cliente
-
-En actualización y verificación de venta 
-
-estado
-
-en proceso, 
-entregado, 
-cancelado.
-
-*/
 
