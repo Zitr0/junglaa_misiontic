@@ -1,4 +1,4 @@
-//import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
@@ -63,9 +63,13 @@ const Productos = () => {
 
 
 const ListaProductos = ({tablaProductos}) => {
+
+  const form = useRef(null);
+
   useEffect(() => {
     console.log("Esta es la tabla de productos en el componente lista", tablaProductos);
   }, [tablaProductos]);
+
 
   return(
     <div className="flex flex-col items-center justify-center table-fixed">
@@ -73,29 +77,16 @@ const ListaProductos = ({tablaProductos}) => {
         <table className="tabla border-separate">
           <thead>
             <tr>
-              <th className="tabla th">Identificador único</th>
-              <th className="tabla th">Descripción</th>
-              <th className="tabla th">Valor unitario</th>
-              <th className="tabla th">Estado</th>
-              <th className="tabla th">Actualizar</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Identificador único</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Descripción</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Valor unitario</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Estado</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Actualizar</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="border border-gray-400 text-gray-800 bg-gray-300">
             {tablaProductos.map((producto) => {
-              return(
-                //key={nanoid()}
-                <tr>
-                  <td>{producto.identificador}</td>
-                  <td>{producto.descripcion}</td>
-                  <td>{producto.valor}</td>
-                  <td>{producto.estado}</td>
-                  <td>
-                    <div className="flex w-full justify-around">
-                      <i className="fas fa-pencil-alt text-blue-700 hover:text-blue-900" />
-                    </div>
-                  </td>
-                </tr> 
-              );
+              return <FilaProductos key={nanoid()} producto={producto} />;
             })}
           </tbody>
         </table>
@@ -107,7 +98,90 @@ const ListaProductos = ({tablaProductos}) => {
   );
 };
 
+const FilaProductos = ({producto}) => {
+  console.log("Productp", producto);
 
+  const [editar, setEditar] = useState(false);
+  const [infoNuevoProducto, setInfoNuevoProducto] = useState({
+    identificador : producto.identificador,
+    descripcion : producto.descripcion,
+    valor : producto.valor,
+    estado : producto.estado
+  })
+
+  const actualizarProducto = async () => {
+    console.log(infoNuevoProducto);
+    //Enviar información al backend
+    const options = {
+      method: 'PATCH',
+      url: 'http://localhost:3001/api/producto',
+      headers: {'Content-Type': 'application/json'},
+      //data: {...infoNuevoProducto, id: producto._id},
+      data: {...infoNuevoProducto, identificador: producto.identificador},
+    };
+    
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success("Producto modificado con éxito");
+        setEditar(false);
+      })
+      .catch(function (error) {
+        toast.error("Error modificado el producto");
+        console.error(error);
+      });
+  };
+
+  return (
+        <tr>
+          {editar? (
+            <>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                 type="text" value={infoNuevoProducto.identificador}
+                 onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, identificador: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                 type="text" value={infoNuevoProducto.descripcion}
+                 onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, descripcion: e.target.value})} />
+                </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                 type="text" value={infoNuevoProducto.valor}
+                 onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, valor: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                 type="text" value={infoNuevoProducto.estado}
+                 onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, estado: e.target.value})} />
+              </td>
+            </>
+          ) : (
+            <>
+              <td>{producto.identificador}</td>
+              <td>{producto.descripcion}</td>
+              <td>{producto.valor}</td>
+              <td>{producto.estado}</td>
+            </>
+          )}
+        <td>
+          <div className="flex w-full justify-around">
+            {editar? ( 
+              <i 
+                  onClick={() => actualizarProducto()} 
+                  className="fas fa-check text-green-700 hover:text-green-500" />
+            ) : (
+              <i 
+                onClick={() => setEditar(!editar)}
+                className="fas fa-pencil-alt text-blue-900 hover:text-blue-700" />
+            )}
+          </div>
+        </td>
+      </tr> 
+  )
+}
 
 const RegistroProductos = ({setMostrarLista, tablaProductos, setProductos}) => {
 
@@ -174,7 +248,6 @@ const RegistroProductos = ({setMostrarLista, tablaProductos, setProductos}) => {
 
               <label className="my-4 font-serif" htmlFor="identificador">Identificador unico: </label>
               <input name="identificador" type="number" 
-
               className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
               placeholder="Ingrese el identificador" required />
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 class Roles extends React.Component {
     sidebarToggle() {
         var sidebar = document.getElementById('sidebar');

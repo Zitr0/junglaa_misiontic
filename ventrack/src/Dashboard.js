@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+//import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 class Dashboard extends React.Component {
     sidebarToggle() {
@@ -61,7 +61,7 @@ render() {
                                 <a href="/RegistroUsuarios" class="no-underline text-white text-2xl">
                                     Registro
                                 </a>
-                                <a href="#" class="no-underline text-white text-lg">
+                                <a href="/RegistroUsuarios" class="no-underline text-white text-lg">
                                 de Personas
                                 </a>
                             </div>
@@ -80,10 +80,10 @@ render() {
 
                         <div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
                             <div class="p-4 flex flex-col">
-                                <a href="#" class="no-underline text-white text-2xl">
+                                <a href="/Ventas" class="no-underline text-white text-2xl">
                                     Registro
                                 </a>
-                                <a href="#" class="no-underline text-white text-lg">
+                                <a href="/Ventas" class="no-underline text-white text-lg">
                                     de Ventas
                                 </a>
                             </div>
@@ -96,7 +96,7 @@ render() {
                             <div class="px-6 py-2 border-b border-light-grey">
                                 <div class="font-bold text-xl">Roles/Permisos de personas registradas</div>
                             </div>
-                            <div class="table-responsive">
+                            {/* <div class="table-responsive">
                                 <table class="table text-grey-darkest">
                                     <thead class="bg-grey-dark text-white text-normal">
                                     <tr>
@@ -184,7 +184,7 @@ render() {
                                     </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> */}
                         </div>
                        
                     </div>
