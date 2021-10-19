@@ -46,7 +46,7 @@ const Productos = () => {
 
   return (
     <div>
-      <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute top-20 right-20 bg-indigo-500 
+      <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute my-10 mx-5 bg-indigo-500 
       text-white rounded border p-3 hover:bg-blue-400">{textoBoton}</button>
       {mostrarLista ? (
       <ListaProductos tablaProductos={productos} />
@@ -72,9 +72,9 @@ const ListaProductos = ({tablaProductos}) => {
 
 
   return(
-    <div className="flex flex-col items-center justify-center table-fixed">
-      <h2 className="text-4xl font-serif my-10">Todos los productos</h2>
-        <table className="tabla border-separate">
+    <div className="flex flex-col items-center">
+      <h2 className="text-4xl font-serif my-10">Todos los productos</h2> 
+        <table className="w-full tabla border-separate">
           <thead>
             <tr>
               <th className="border border-gray-400 text-gray-800 bg-gray-300">Identificador único</th>
@@ -84,14 +84,14 @@ const ListaProductos = ({tablaProductos}) => {
               <th className="border border-gray-400 text-gray-800 bg-gray-300">Actualizar</th>
             </tr>
           </thead>
-          <tbody className="border border-gray-400 text-gray-800 bg-gray-300">
+          <tbody className="border border-gray-400 text-gray-800 bg-gray-200">
             {tablaProductos.map((producto) => {
               return <FilaProductos key={nanoid()} producto={producto} />;
             })}
           </tbody>
         </table>
         <Link to="/">
-          <button className="bg-indigo-500 my-5
+          <button className="bg-indigo-500 my-10
              text-white rounded border p-4  hover:bg-blue-400">Página principal</button>
         </Link>
     </div>
@@ -99,7 +99,7 @@ const ListaProductos = ({tablaProductos}) => {
 };
 
 const FilaProductos = ({producto}) => {
-  console.log("Productp", producto);
+  console.log("Producto", producto);
 
   const [editar, setEditar] = useState(false);
   const [infoNuevoProducto, setInfoNuevoProducto] = useState({
@@ -183,7 +183,7 @@ const FilaProductos = ({producto}) => {
   )
 }
 
-const RegistroProductos = ({setMostrarLista, tablaProductos, setProductos}) => {
+const RegistroProductos = ({setMostrarLista}) => {
 
   const form = useRef(null);
 
@@ -244,7 +244,7 @@ const RegistroProductos = ({setMostrarLista, tablaProductos, setProductos}) => {
               </div>
             </header> */}
             <form ref={form} onSubmit={submitForm} className='text-lg flex flex-col items-center'>
-            <h2 className="text-3xl font-serif">Crear nuevo producto</h2>
+            <h2 className="text-4xl font-serif my-10">Crear nuevo producto</h2>
 
               <label className="my-4 font-serif" htmlFor="identificador">Identificador unico: </label>
               <input name="identificador" type="number" 
