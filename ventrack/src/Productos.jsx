@@ -74,6 +74,20 @@ const Productos = () => {
 
 const ListaProductos = ({tablaProductos, setEjecutarConsulta}) => {
 
+  const [busqueda, setBusqueda] = useState('');
+  const [productosFiltrados, setProductosFiltrados] = useState(tablaProductos);
+
+  useEffect(() => {
+    console.log("Busqueda", busqueda);
+    console.log("Tabla original", tablaProductos);
+    setProductosFiltrados(
+      tablaProductos.filter((elemento) => {
+        console.log("Elemento", elemento);
+        return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+      })
+    );
+  }, [busqueda, tablaProductos]);
+
   useEffect(() => {
     console.log("Esta es la tabla de productos en el componente lista", tablaProductos);
   }, [tablaProductos]);
@@ -81,7 +95,12 @@ const ListaProductos = ({tablaProductos, setEjecutarConsulta}) => {
 
   return(
     <div className="flex flex-col items-center">
-      <h2 className="text-4xl font-serif my-10">Todos los productos</h2> 
+      <input 
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+        placeholder="Buscar" 
+        className="border-2 border-gray-500 my-10 px-3 py-2 focus:outline-none focus:border-indigo-500" />
+      <h2 className="text-4xl font-serif my-5">Todos los productos</h2> 
         <table className="w-full tabla border-separate">
           <thead>
             <tr>
@@ -93,7 +112,7 @@ const ListaProductos = ({tablaProductos, setEjecutarConsulta}) => {
             </tr>
           </thead>
           <tbody className="border border-gray-400 text-gray-800 bg-gray-200">
-            {tablaProductos.map((producto) => {
+            {productosFiltrados.map((producto) => {
               return <FilaProductos key={nanoid()} 
               producto={producto} 
               setEjecutarConsulta={setEjecutarConsulta} />;
