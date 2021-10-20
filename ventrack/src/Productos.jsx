@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -10,6 +11,8 @@ const Productos = () => {
   const [mostrarLista, setMostrarLista] = useState(true);
   const [productos, setProductos] = useState([]);
   const [textoBoton, setTextoBoton] = useState("Crear nuevo producto");
+  const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+
 
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -29,9 +32,16 @@ const Productos = () => {
           console.error(error);
         });
     };
+    if(ejecutarConsulta){
+      obtenerProductos();
+      setEjecutarConsulta(false);
+    }
+  }, [ejecutarConsulta])
+
+  useEffect(() => {
     //Obtener lista de productos desde el backend
     if(mostrarLista){
-      obtenerProductos();
+      setEjecutarConsulta(true);
     }
   }, [mostrarLista]);
 
@@ -49,7 +59,7 @@ const Productos = () => {
       <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute my-10 mx-5 bg-indigo-500 
       text-white rounded border p-3 hover:bg-blue-400">{textoBoton}</button>
       {mostrarLista ? (
-      <ListaProductos tablaProductos={productos} />
+      <ListaProductos tablaProductos={productos} setEjecutarConsulta={setEjecutarConsulta} />
       ) : (
       <RegistroProductos 
       setMostrarLista = {setMostrarLista}
@@ -62,9 +72,7 @@ const Productos = () => {
 };
 
 
-const ListaProductos = ({tablaProductos}) => {
-
-  const form = useRef(null);
+const ListaProductos = ({tablaProductos, setEjecutarConsulta}) => {
 
   useEffect(() => {
     console.log("Esta es la tabla de productos en el componente lista", tablaProductos);
@@ -86,7 +94,9 @@ const ListaProductos = ({tablaProductos}) => {
           </thead>
           <tbody className="border border-gray-400 text-gray-800 bg-gray-200">
             {tablaProductos.map((producto) => {
-              return <FilaProductos key={nanoid()} producto={producto} />;
+              return <FilaProductos key={nanoid()} 
+              producto={producto} 
+              setEjecutarConsulta={setEjecutarConsulta} />;
             })}
           </tbody>
         </table>
@@ -98,7 +108,7 @@ const ListaProductos = ({tablaProductos}) => {
   );
 };
 
-const FilaProductos = ({producto}) => {
+const FilaProductos = ({producto, setEjecutarConsulta}) => {
   console.log("Producto", producto);
 
   const [editar, setEditar] = useState(false);
@@ -126,6 +136,7 @@ const FilaProductos = ({producto}) => {
         console.log(response.data);
         toast.success("Producto modificado con éxito");
         setEditar(false);
+        setEjecutarConsulta(true);
       })
       .catch(function (error) {
         toast.error("Error modificado el producto");
@@ -144,17 +155,17 @@ const FilaProductos = ({producto}) => {
                  <span>{infoNuevoProducto.identificador}</span>
               </td>
               <td>
-                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
                  type="text" value={infoNuevoProducto.descripcion}
                  onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, descripcion: e.target.value})} />
                 </td>
               <td>
-                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
                  type="text" value={infoNuevoProducto.valor}
                  onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, valor: e.target.value})} />
               </td>
               <td>
-                <input className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
                  type="text" value={infoNuevoProducto.estado}
                  onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, estado: e.target.value})} />
               </td>
@@ -170,9 +181,18 @@ const FilaProductos = ({producto}) => {
         <td>
           <div className="flex w-full justify-around">
             {editar? ( 
-              <i 
+            <>
+              <Tooltip title="Confirmar Edición" arrow>
+                <i 
                   onClick={() => actualizarProducto()} 
                   className="fas fa-check text-green-700 hover:text-green-500" />
+              </Tooltip>
+              <Tooltip title="Cancelar Edición" arrow>
+                <i 
+                  onClick={() => setEditar(!editar)}
+                  className="fas fa-ban text-yellow-700 hover:text-yellow-500" />
+              </Tooltip>
+            </>
             ) : (
               <i 
                 onClick={() => setEditar(!editar)}
@@ -249,19 +269,19 @@ const RegistroProductos = ({setMostrarLista}) => {
 
               <label className="my-4 font-serif" htmlFor="identificador">Identificador unico: </label>
               <input name="identificador" type="number" 
-              className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
               placeholder="Ingrese el identificador" required />
 
               <label className="font-serif" htmlFor="descripcion">Descripción: </label>
-              <textarea name="descripcion" className=" bg-gray-50 border rounded border-gray-300 p-1 m-2" 
+              <textarea name="descripcion" className=" bg-gray-50 border rounded border-gray-400 p-1 m-2" 
               cols="22" rows="3" placeholder="Descripción del producto" required></textarea>
 
               <label className="font-serif" htmlFor="valor">Valor unitario: </label>
-                <input name="valor" type="number" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
+                <input name="valor" type="number" className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
                 placeholder="Valor del producto" required/>
 
               <label className="font-serif" htmlFor="estado">Estado: </label>
-                <select name="estado" defaultValue={0} required>
+                <select className="border rounded border-gray-400" name="estado" defaultValue={0} required>
                   <option disabled value={0}>Seleccione una opción</option>
                   <option >Disponible</option>
                   <option >No disponible</option>
