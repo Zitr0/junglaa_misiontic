@@ -12,8 +12,13 @@ mongoose.connect(config.db, {useNewUrlParser: true}, (err, res)=>{
     }
 
     //si no hay error
-    console.log("Conexión a la base de datos establecida");
+   /* console.log("Conexión a la base de datos establecida");
     app.listen(config.port, ()=> {
         console.log(`Server is up on port:${config.port}`)
-    });
+    });*/
 });
+
+app.listen(config.port, ()=>{
+    console.log('Server is up on port ' + config.port)
+})
+
