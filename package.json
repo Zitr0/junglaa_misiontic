@@ -4,13 +4,16 @@
   "description": "api para servicios de productos - ejemplo mintic",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "johnathan monsalve",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.10"
   },
