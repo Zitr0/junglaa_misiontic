@@ -13,30 +13,32 @@ const Productos = () => {
   const [textoBoton, setTextoBoton] = useState("Crear nuevo producto");
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
 
+  const obtenerProductos = async () => {
+    const options = {
+      method: 'GET',
+      url: 'http://localhost:3001/api/producto',
+      headers: {'Content-Type': 'application/json'}
+    };
+     
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        setProductos(response.data.productos);
+        })
+      .catch(function (error) {
+        console.error(error);
+      });
+    setEjecutarConsulta();
+  };
 
   useEffect(() => {
-    const obtenerProductos = async () => {
-      const options = {
-        method: 'GET',
-        url: 'http://localhost:3001/api/producto',
-        headers: {'Content-Type': 'application/json'}
-      };
-     
-      await axios
-        .request(options)
-        .then(function (response) {
-          console.log(response.data);
-          setProductos(response.data.productos);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    };
+    console.log("Consulta", ejecutarConsulta);
     if(ejecutarConsulta){
       obtenerProductos();
-      setEjecutarConsulta(false);
     }
   }, [ejecutarConsulta])
+    
 
   useEffect(() => {
     //Obtener lista de productos desde el backend
@@ -78,20 +80,12 @@ const ListaProductos = ({tablaProductos, setEjecutarConsulta}) => {
   const [productosFiltrados, setProductosFiltrados] = useState(tablaProductos);
 
   useEffect(() => {
-    console.log("Busqueda", busqueda);
-    console.log("Tabla original", tablaProductos);
     setProductosFiltrados(
       tablaProductos.filter((elemento) => {
-        console.log("Elemento", elemento);
         return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
       })
     );
   }, [busqueda, tablaProductos]);
-
-  useEffect(() => {
-    console.log("Esta es la tabla de productos en el componente lista", tablaProductos);
-  }, [tablaProductos]);
-
 
   return(
     <div className="flex flex-col items-center">
@@ -263,26 +257,9 @@ const RegistroProductos = ({setMostrarLista}) => {
     setMostrarLista(true);
   };
 
-  // sidebarToggle(){
-  //   var sidebar = document.getElementById('sidebar');
-   
-  //   if (sidebar.style.display === "none") {
-  //       sidebar.style.display = "block";
-  //   } else {
-  //       sidebar.style.display = "none";
-  //   }
-  // }
 
   return (
         <div>
-            {/* <header class="bg-nav">
-              <div class="flex justify-between">
-                <div class="p-1 mx-3 inline-flex items-center">
-                  <i class="fas fa-bars pr-2 text-white" onClick={this.sidebarToggle}></i>
-                  <h1 class="text-white p-2">Ventrack</h1>
-                </div>
-              </div>
-            </header> */}
             <form ref={form} onSubmit={submitForm} className='text-lg flex flex-col items-center'>
             <h2 className="text-4xl font-serif my-10">Crear nuevo producto</h2>
 
