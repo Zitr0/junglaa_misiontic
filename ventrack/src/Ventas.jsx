@@ -1,37 +1,49 @@
-//import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 const Ventas = () => {
   const [mostrarLista, setMostrarLista] = useState(true);
-  const [Ventas, setVentas] = useState([]);
+  const [ventas, setVentas] = useState([]);
   const [textoBoton, setTextoBoton] = useState("Crear nuevo producto");
+  const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+
+  const obtenerVentas = async () => {
+    const options = {
+      method: 'GET',
+      url: 'http://localhost:3001/api/venta',
+      headers: {'Content-Type': 'application/json'}
+    };
+     
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        setVentas(response.data.ventas);
+        })
+      .catch(function (error) {
+        console.error(error);
+      });
+    setEjecutarConsulta();
+  };
 
   useEffect(() => {
-    const obtenerVentas = async () => {
-      const options = {
-        method: 'GET',
-        url: 'http://localhost:3001/api/venta',
-        headers: {'Content-Type': 'application/json'}
-      };
-     
-      await axios
-        .request(options)
-        .then(function (response) {
-          console.log(response.data);
-          setVentas(response.data.ventas);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    };
+    console.log("Consulta", ejecutarConsulta);
+    if(ejecutarConsulta){
+      obtenerVentas();
+    }
+  }, [ejecutarConsulta])
+    
+
+  useEffect(() => {
     //Obtener lista de productos desde el backend
     if(mostrarLista){
-      obtenerVentas();
+      setEjecutarConsulta(true);
     }
   }, [mostrarLista]);
 
@@ -46,15 +58,15 @@ const Ventas = () => {
 
   return (
     <div>
-      <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute top-20 right-20 bg-indigo-500 
+      <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute my-10 mx-5 bg-indigo-500 
       text-white rounded border p-3 hover:bg-blue-400">{textoBoton}</button>
       {mostrarLista ? (
-      <ListaVentas tablaVentas={Ventas} />
+      <ListaVentas tablaVentas={ventas} setEjecutarConsulta={setEjecutarConsulta} />
       ) : (
       <RegistroVentas 
       setMostrarLista = {setMostrarLista}
-      tablaVentas = {Ventas}
-      setVentas = {setVentas}/>
+      tablaProductos = {ventas}
+      setProductos = {setVentas}/>
       )}
       <ToastContainer position="bottom-center" autoClose={4000} />
     </div>
@@ -62,61 +74,182 @@ const Ventas = () => {
 };
 
 
-const ListaVentas = ({tablaVentas}) => {
+const ListaVentas = ({tablaVentas, setEjecutarConsulta}) => {
+
+  const [busqueda, setBusqueda] = useState('');
+  const [VentasFiltradas, setVentasFiltradas] = useState(tablaVentas);
+
   useEffect(() => {
-    console.log("Esta es la tabla de ventas en el componente lista", tablaVentas);
-  }, [tablaVentas]);
+    setVentasFiltradas(
+      tablaVentas.filter((elemento) => {
+        return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+      })
+    );
+  }, [busqueda, tablaVentas]);
 
   return(
-    <div className="flex flex-col items-center justify-center table-fixed">
-      <h2 className="text-4xl font-serif my-10">Ventas</h2>
-        <table className="tabla border-separate">
+    <div className="flex flex-col items-center">
+      <input 
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+        placeholder="Buscar" 
+        className="border-2 border-gray-500 my-10 px-3 py-2 focus:outline-none focus:border-indigo-500" />
+      <h2 className="text-4xl font-serif my-5">Ventas</h2> 
+        <table className="w-full tabla border-separate">
           <thead>
             <tr>
-              <th className="tabla th">Id</th>
-              <th className="tabla th">Cantidad</th>
-              <th className="tabla th">Total</th>
-              <th className="tabla th">Valor Unitario</th>
-              <th className="tabla th">Fecha</th>
-              <th className="tabla th">Cliente</th>
-              <th className="tabla th">Documento</th>
-              <th className="tabla th">Nombre De Encargado</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Id</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Cantidad</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Total</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">ValorUnitario</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Fecha</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Cliente</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">Documento</th>
+              <th className="border border-gray-400 text-gray-800 bg-gray-300">NombreDeEncargado</th>
             </tr>
           </thead>
-          <tbody>
-            {tablaVentas.map((venta) => {
-              return(
-                //key={nanoid()}
-                <tr>
-                  <td>{venta.Id}</td>
-                  <td>{venta.Cantidad}</td>
-                  <td>{venta.Total}</td>
-                  <td>{venta.ValorUnitario}</td>
-                  <td>{venta.Fecha}</td>
-                  <td>{venta.Cliente}</td>
-                  <td>{venta.Documento}</td>
-                  <td>{venta.NombreDeEncargado}</td>
-                  <td>
-                    <div className="flex w-full justify-around">
-                      <i className="fas fa-pencil-alt text-blue-700 hover:text-blue-900" />
-                    </div>
-                  </td>
-                </tr> 
-              );
+          <tbody className="border border-gray-400 text-gray-800 bg-gray-200">
+            {VentasFiltradas.map((venta) => {
+              return <FilaVentas key={nanoid()} 
+              venta={venta} 
+              setEjecutarConsulta={setEjecutarConsulta} />;
             })}
           </tbody>
         </table>
         <Link to="/">
-          <button className="bg-indigo-500 my-5
+          <button className="bg-indigo-500 my-10
              text-white rounded border p-4  hover:bg-blue-400">Página principal</button>
         </Link>
     </div>
   );
 };
 
+const FilaVentas = ({venta, setEjecutarConsulta}) => {
+  console.log("Venta", venta);
 
+  const [editar, setEditar] = useState(false);
+  const [infoNuevaVenta, setInfoNuevaVenta] = useState({
+    Id : venta.Id,
+    Cantidad : venta.Cantidad,
+    Total : venta.Total,
+    ValorUnitario : venta.ValorUnitario,
+    Fecha : venta.Fecha,
+    Cliente : venta.Cliente,
+    Documento : venta.Documento,
+    NombreDeEncargado : venta.NombreDeEncargado
+  })
 
-const RegistroVentas = ({setMostrarLista, tablaVentas, setVentas}) => {
+  const actualizarVenta = async () => {
+    console.log(infoNuevaVenta);
+    //Enviar información al backend
+    const options = {
+      method: 'PATCH',
+      url: 'http://localhost:3001/api/venta',
+      headers: {'Content-Type': 'application/json'},
+      //data: {...infoNuevoProducto, id: producto._id},
+      data: {...infoNuevaVenta, Id: venta.Id},
+    };
+    
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success("Venta actualizada con éxito");
+        setEditar(false);
+        setEjecutarConsulta(true);
+      })
+      .catch(function (error) {
+        toast.error("Error actualizando el producto");
+        console.error(error);
+      });
+  };
+
+  return (
+        <tr>
+          {editar? (
+            <>
+              <td>
+                {/* <span className=' bg-gray-50 border rounded border-gray-300 p-1 m-2'
+                 type="text" value={infoNuevoProducto.identificador}
+                 onChange={(e) => setInfoNuevoProducto({...infoNuevoProducto, identificador: e.target.value})} /> */}
+                 <span>{infoNuevaVenta.Id}</span>
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
+                 type="number" value={infoNuevaVenta.Cantidad}
+                 onChange={(e) => setInfoNuevaVenta({...infoNuevaVenta, Cantidad: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
+                 type="number" value={infoNuevaVenta.Total}
+                 onChange={(e) => setInfoNuevaVenta({...infoNuevaVenta, Total: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
+                 type="number" value={infoNuevaVenta.ValorUnitario}
+                 onChange={(e) => setInfoNuevaVenta({...infoNuevaVenta, ValorUnitario: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
+                 type="date" value={infoNuevaVenta.Fecha}
+                 onChange={(e) => setInfoNuevaVenta({...infoNuevaVenta, Fecha: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
+                 type="text" value={infoNuevaVenta.Cliente}
+                 onChange={(e) => setInfoNuevaVenta({...infoNuevaVenta, Cliente: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
+                 type="number" value={infoNuevaVenta.Documento}
+                 onChange={(e) => setInfoNuevaVenta({...infoNuevaVenta, Documento: e.target.value})} />
+              </td>
+              <td>
+                <input className=' bg-gray-50 border rounded border-gray-400 p-1 m-2'
+                 type="number" value={infoNuevaVenta.ValorUnitario}
+                 onChange={(e) => setInfoNuevaVenta({...infoNuevaVenta, ValorUnitario: e.target.value})} />
+              </td>
+
+            </>
+          ) : (
+            <>
+              <td>{venta.Id}</td>
+              <td>{venta.Cantidad}</td>
+              <td>{venta.Total}</td>
+              <td>{venta.ValorUnitario}</td>
+              <td>{venta.Fecha}</td>
+              <td>{venta.Cliente}</td>
+              <td>{venta.Documento}</td>
+              <td>{venta.NombreDeEncargado}</td>
+            </>
+          )}
+        <td>
+          <div className="flex w-full justify-around">
+            {editar? ( 
+            <>
+              <Tooltip title="Confirmar Edición" arrow>
+                <i 
+                  onClick={() => actualizarVenta()} 
+                  className="fas fa-check text-green-700 hover:text-green-500" />
+              </Tooltip>
+              <Tooltip title="Cancelar Edición" arrow>
+                <i 
+                  onClick={() => setEditar(!editar)}
+                  className="fas fa-ban text-yellow-700 hover:text-yellow-500" />
+              </Tooltip>
+            </>
+            ) : (
+              <i 
+                onClick={() => setEditar(!editar)}
+                className="fas fa-pencil-alt text-blue-900 hover:text-blue-700" />
+            )}
+          </div>
+        </td>
+      </tr> 
+  )
+}
+
+const RegistroVentas = ({setMostrarLista}) => {
 
   const form = useRef(null);
 
@@ -150,76 +283,67 @@ const RegistroVentas = ({setMostrarLista, tablaVentas, setVentas}) => {
       .request(options)
       .then(function (response) {
         console.log(response.data);
-        toast.success("Producto agregado con éxito");
+        toast.success("Venta agregada con éxito");
       })
       .catch(function (error) {
         console.error(error);
-        toast.error("Error al crear el producto");
+        toast.error("Error al crear la Venta");
       });
 
     setMostrarLista(true);
   };
 
-  // sidebarToggle(){
-  //   var sidebar = document.getElementById('sidebar');
-   
-  //   if (sidebar.style.display === "none") {
-  //       sidebar.style.display = "block";
-  //   } else {
-  //       sidebar.style.display = "none";
-  //   }
-  // }
 
   return (
         <div>
-            {/* <header class="bg-nav">
-              <div class="flex justify-between">
-                <div class="p-1 mx-3 inline-flex items-center">
-                  <i class="fas fa-bars pr-2 text-white" onClick={this.sidebarToggle}></i>
-                  <h1 class="text-white p-2">Ventrack</h1>
-                </div>
-              </div>
-            </header> */}
             <form ref={form} onSubmit={submitForm} className='text-lg flex flex-col items-center'>
-            <h2 className="text-3xl font-serif">Crear nuevo producto</h2>
+            <h2 className="text-4 xl font-serif my-10">Crear nuevo producto</h2>
 
               <label className="my-4 font-serif" htmlFor="identificador">Id: </label>
-              <input name="Id" type="number" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
+              <input name="Id" type="number" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
               placeholder="Ingrese el Id" required />
 
-              <label className="font-serif" htmlFor="Cantidad">Cantidad: </label>
-              <input name="Cantidad" type="number" className=" bg-gray-50 border rounded border-gray-300 p-1 m-2" 
-              cols="22" rows="3" placeholder="Ingrese la Cantidad" required></input>
+              <label className="my-4 font-serif" htmlFor="Cantidad">Cantidad: </label>
+              <input name="Cantidad" type="number" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
+              placeholder="Ingrese la Cantidad" required />
 
-              <label className="font-serif" htmlFor="Total">Total: </label>
-                <input name="Total" type="number" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
-                placeholder="Ingrese el valor total del producto" required/>
-              
-              <label className="font-serif" htmlFor="ValorUnitario">Valor Unitario: </label>
-                <input name="ValorUnitario" type="number" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
-                placeholder="Infrese el valor unitario del producto" required/>
+              <label className="my-4 font-serif" htmlFor="Total">Total: </label>
+              <input name="Total" type="number" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
+              placeholder="Ingrese el Total" required />              
+
+              <label className="my-4 font-serif" htmlFor="ValorUnitario">Valor Unitario: </label>
+              <input name="ValorUnitario" type="number" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
+              placeholder="Ingrese el Valor unitario" required />
+
+              <label className="my-4 font-serif" htmlFor="Fecha">Fecha: </label>
+              <input name="Fecha" type="date" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
+              placeholder="Ingrese la Fecha" required />
+
+              <label className="my-4 font-serif" htmlFor="Cliente">Cliente: </label>
+              <input name="Cliente" type="text" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
+              placeholder="Ingrese el nombre del cliente" required />
+
+              <label className="my-4 font-serif" htmlFor="Documento">Documento: </label>
+              <input name="Documento" type="number" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
+              placeholder="Ingrese el # de documento" required />
+
+              <label className="my-4 font-serif" htmlFor="NombreDeEncargado">Nombre de encargado: </label>
+              <input name="NombreDeEncargado" type="text" 
+              className=' bg-gray-50 border rounded border-gray-400 p-1 m-2' 
+              placeholder="Ingrese el nombre del encargado" required />
                 
-            <label className="font-serif" htmlFor="Fecha">Fecha: </label>
-                <input name="Fecha" type="date" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
-                placeholder="Ingrese la fecha" required/>
-            
-            <label className="font-serif" htmlFor="Cliente">Cliente: </label>
-                <input name="Cliente" type="text" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
-                placeholder="Ingrese el cliente" required/>  
-
-            <label className="font-serif" htmlFor="Documento">Documento: </label>
-                <input name="Documento" type="number" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
-                placeholder="Ingrese el Documento" required/>
-
-            <label className="font-serif" htmlFor="NombreDeEncargado">Nombre de Encargado: </label>
-                <input name="NombreDeEncargado" type="text" className=' bg-gray-50 border rounded border-gray-300 p-1 m-2' 
-                placeholder="Ingrese el nombre del encargado" required/>
-
                 <br />  
 
               <button type="submit"
               className='col-span-2 bg-indigo-500 
-              text-white rounded border p-3 m-5 w-1/5 hover:bg-blue-400'>Agregar producto</button>
+              text-white rounded border p-3 m-5 w-1/5 hover:bg-blue-400'>Agregar Venta</button>
             </form>
         </div>
   );
