@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Ventas = () => {
   const [mostrarLista, setMostrarLista] = useState(true);
   const [ventas, setVentas] = useState([]);
-  const [textoBoton, setTextoBoton] = useState("Crear nuevo producto");
+  const [textoBoton, setTextoBoton] = useState("Crear nueva venta");
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
 
   const obtenerVentas = async () => {
@@ -49,7 +49,7 @@ const Ventas = () => {
 
   useEffect(() => {
     if(mostrarLista){
-      setTextoBoton("Crear nuevo producto");
+      setTextoBoton("Crear nueva venta");
     }
     else{
       setTextoBoton("Volver a la lista");
@@ -58,8 +58,8 @@ const Ventas = () => {
 
   return (
     <div>
-      <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute my-10 mx-5 bg-indigo-500 
-      text-white rounded border p-3 hover:bg-blue-400">{textoBoton}</button>
+      <button onClick={() => {setMostrarLista(!mostrarLista)}} className="absolute my-10 mx-5 bg-gray-800 
+      text-white rounded border p-3 hover:bg-gray-600">{textoBoton}</button>
       {mostrarLista ? (
       <ListaVentas tablaVentas={ventas} setEjecutarConsulta={setEjecutarConsulta} />
       ) : (
@@ -117,8 +117,8 @@ const ListaVentas = ({tablaVentas, setEjecutarConsulta}) => {
           </tbody>
         </table>
         <Link to="/">
-          <button className="bg-indigo-500 my-10
-             text-white rounded border p-4  hover:bg-blue-400">Página principal</button>
+          <button className="bg-gray-800 my-10
+             text-white rounded border p-4  hover:bg-gray-600">Página principal</button>
         </Link>
     </div>
   );
@@ -297,7 +297,7 @@ const RegistroVentas = ({setMostrarLista}) => {
   return (
         <div>
             <form ref={form} onSubmit={submitForm} className='text-lg flex flex-col items-center'>
-            <h2 className="text-4 xl font-serif my-10">Crear nuevo producto</h2>
+            <h2 className="text-4 xl font-serif my-10">Crear nueva Venta</h2>
 
               <label className="my-4 font-serif" htmlFor="identificador">Id: </label>
               <input name="Id" type="number" 
@@ -343,7 +343,7 @@ const RegistroVentas = ({setMostrarLista}) => {
 
               <button type="submit"
               className='col-span-2 bg-indigo-500 
-              text-white rounded border p-3 m-5 w-1/5 hover:bg-blue-400'>Agregar Venta</button>
+              text-white rounded border p-3 m-5 w-1/5 hover:bg-gray-400'>Agregar Venta</button>
             </form>
         </div>
   );
