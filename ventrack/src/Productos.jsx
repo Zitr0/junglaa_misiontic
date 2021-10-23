@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BACKEND_URL = "https://backend-ventrack.herokuapp.com";
 
 const Productos = () => {
   const [mostrarLista, setMostrarLista] = useState(true);
@@ -16,7 +17,7 @@ const Productos = () => {
   const obtenerProductos = async () => {
     const options = {
       method: 'GET',
-      url: 'http://localhost:3001/api/producto',
+      url: `${BACKEND_URL}/api/producto`,
       headers: {'Content-Type': 'application/json'}
     };
      
@@ -137,9 +138,8 @@ const FilaProductos = ({producto, setEjecutarConsulta}) => {
     //Enviar información al backend
     const options = {
       method: 'PATCH',
-      url: 'http://localhost:3001/api/producto',
+      url: `${BACKEND_URL}/api/producto`,
       headers: {'Content-Type': 'application/json'},
-      //data: {...infoNuevoProducto, id: producto._id},
       data: {...infoNuevoProducto, identificador: producto.identificador},
     };
     
@@ -233,7 +233,7 @@ const RegistroProductos = ({setMostrarLista}) => {
 
     const options = {
       method: 'POST',
-      url: 'http://localhost:3001/api/producto',
+      url: `${BACKEND_URL}/api/producto`,
       headers: {'Content-Type': 'application/json'},
       data: {
         identificador: nuevoProducto.identificador,
